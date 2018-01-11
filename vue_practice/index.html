@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue</title>
+	</head>
+	<style>
+		
+	</style>
+	<body>
+		<div id="app">
+			{{message}}
+		</div>
+		<div id="app-2">
+			<span v-bind:title="message">
+				<!--<span :title="message"></span> -->
+				鼠标悬浮显示信息				
+			</span>
+		</div>
+		<div id="app-3">
+			<span v-if="seen">
+				你看到我了
+			</span>
+		</div>
+		<div id="app-4">
+			<ol>
+				<li v-for="todo in todos">
+					{{ todo.text }}
+				</li>
+			</ol>
+		</div>
+		<div id="app-5">
+			<p>{{message}}</p>
+			<button v-on:click="reverse">逆转消息</button>
+			<!--   <button @click="reverse"></button>-->
+		</div>
+		<div id="app-6">
+			<child v-bind:my-message="message"></child>
+			<input v-model="message" />
+		</div>
+		<div id="app-7">
+			<ol>
+				<todo-item
+					v-for="item in list"
+					v-bind:todo="item"
+					v-bind:key="item.id"
+					></todo-item>
+			</ol>
+		</div>
+		<div id="app-8">
+			<p>{{message}}</p>
+			<p>{{reversemessage}}</p>
+		</div>
+		<div id="ex" v-html="nihao"></div>
+		<div>
+  			<span v-for="n in 10">{{ n }} </span>
+		</div>
+		<ul id="e">
+		<li  v-for="n in evennumbers"></li>
+		</ul>
+		<div id="exa">
+			<button v-on:click="counter += 1">增加1</button>
+			<p>这个按钮被点击了{{ counter }}次</p>
+		</div>
+		<div id="exa-1">
+			<button v-on:click="great">great</button>
+		</div>
+		<form id="form">
+		<input v-model="message" placeholder="edit me" />
+		<p id="p">message:{{message}}</p>
+		<input type="checkbox" v-model="checkbox" />
+		<p>{{checkbox}}</p>
+		</form>
+		<div id='example-3'>
+  			<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+  			<label for="jack">Jack</label>
+  			<input type="checkbox" id="john" value="John" v-model="checkedNames">
+  			<label for="john">John</label>
+  			<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+  			<label for="mike">Mike</label>
+  			<br>
+  			<span>Checked names: {{ checkedNames }}</span>
+		</div>
+		<div id="vue">
+			 <my-component></my-component>
+		</div>
+		<div id="em">
+			<span>{{total}}</span>
+			<button-exam v-on:increment="incrementtotal"></button-exam>
+			<button-exam v-on:increment="incrementtotal"></button-exam>
+		</div>
+		<script src="js/vue.js" ></script>
+		<script>
+			Vue.component("button-exam",{
+				template:'<button v-on:click="incre">{{counter}}</button>',
+				data:function(){
+					return{
+						counter:0
+					}
+				},
+				methods:{
+					incre:function(){
+						this.counter += 1
+						this.$emit("increment")
+					}
+				}
+				
+			})
+			var em = new Vue({
+				el:"#em",
+				data:{
+					total:0
+				},
+				methods:{
+					incrementtotal:function(){
+						this.total += 1
+					}
+				}
+			})
+			var child = {
+				template:"<div>nihao</div>"
+			}
+			var vue = new Vue({
+				el:"#vue",
+				components:{
+					"my-component":child
+				}
+			})
+			var exam3 =new Vue({
+  				el: '#example-3',
+  				data: {
+   					 checkedNames: []
+  				}	
+			})
+			var form = new Vue({
+				el:"#form",
+				data:{
+					message:"message",
+					checkbox:true
+				}
+			})
+			var exa1 = new Vue({
+				el:"#exa-1",
+				data:{
+					name:"123"
+				},
+				methods:{
+					great:function(event){
+						console.log(this.name)
+					if(event){
+					console.log(event.target.tagName)
+				    }
+					}
+				
+				}
+				
+			})
+			var exa = new Vue({
+				el:"#exa",
+				data:{
+					counter:0
+				}
+			})
+			var e = new Vue({
+				el:"#e",
+				data:{
+					numbers:[1,2,3,4,5]
+				},
+				computed:{
+					evennumbers:function(){
+						return this.numbers.filter(function(number){
+							return number % 2 === 0 
+						})
+					}
+				}
+				
+			})
+			var ex =new Vue({
+				el:"#ex",
+				data:{
+					nihao:"nihao"
+				}
+			})
+			var app =new Vue({
+				el:"#app",
+				data:{
+					message:"hello vue"
+				}
+			})
+			var app2 = new Vue({
+				el:"#app-2",
+				data:{
+					message:"页面加载于"+ new Date().toLocaleString()
+				}
+			})
+			var app3 = new Vue({
+				el:"#app-3",
+				data:{
+					seen:true
+				}
+			})
+			var app4 = new Vue({
+				el:"#app-4",
+				data:{
+					todos:[
+					{text:"java"},
+					{text:"vue"},
+					{text:"jquery"}
+					]
+				}
+			})
+			var app5 = new Vue({
+				el:"#app-5",
+				data:{
+					message:"hello vue"
+				},
+				methods:{
+					reverse:function(){
+						this.message = this.message.split("").reverse().join("")
+					}
+				}
+			})
+			Vue.component("child",{
+				props:["message"],
+				data:function(){
+					return {message}
+				},
+				template:"<p>{{message}}</p>"
+			})
+			var app6 = new Vue({
+				el:"#app-6",
+				data:{
+					message:"hello"
+				}
+			})
+			
+			Vue.component("todo-item",{
+				props:["todo"],
+				template:"<li>{{todo.text}}</li>"
+			})
+			var app7 = new Vue({
+				el:"#app-7",
+				data:{
+					list:[
+					{id:0 ,text:"0"},
+					{id:1 ,text:"1"},
+					{id:2 ,text:"2"}
+					]
+				}
+			})
+			new Vue({
+				data:{
+					a:1
+				},
+				created:function(){
+					console.log("a is"+this.a)
+				}
+			})
+			var app8 =new Vue({
+				el:"#app-8",
+				data:{
+					message:"hello"
+				},
+				computed:{
+					reversemessage:function(){
+						return this.message.split("").reverse().join("")
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>子组件索引</title>
+	</head>
+	<body>
+		<div id="app">
+			<button @click="handleClick">通过ref获取子组件实例</button>
+			<p ref="p"></p>
+			<child-component ref="child"></child-component>
+		</div>
+		<script type="text/javascript" src="js/vue.js" ></script>
+		<script type="text/javascript">
+			Vue.component("child-component",{
+				template:"<div>子组件</div>",
+				data:function(){
+					return {
+						message:"子组件"
+					}
+				}
+			});
+			var app = new Vue({
+				el:"#app",
+				methods:{
+					handleClick:function(){
+						var mes = this.$refs.p.message;
+						// 普通标签是uundefined 组件标签可以获取到
+						console.log(mes);
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
