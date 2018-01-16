@@ -16,6 +16,11 @@
 							<th>商品单价</th>
 							<th>商品数量</th>
 							<th>操作</th>
+							<th>
+								<label for="bothPick">全选</label>
+								<input type="checkbox" value="bothPick" v-model="checked" @click="bothPick"/>
+								
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,6 +37,9 @@
 							</td>
 							<td>
 								<button @click="handleRemove(index)">移除</button>
+							</td>
+							<td>
+								<input type="checkbox" v-model="item.checkboxx" :checked="item.checkboxx" @click="delBothPick"/>
 							</td>
 						</tr>
 					</tbody>
