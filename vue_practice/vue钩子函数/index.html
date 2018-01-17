@@ -1,0 +1,103 @@
+<html>  
+  
+    <head>  
+        <meta charset="utf-8" />  
+        <title>vue生命周期</title>  
+        <script type="text/javascript" src="js/vue.js" ></script> 
+    </head>  
+  
+    <body>  
+        <div id="app">  
+            <p>{{ message }}</p>  
+            <button @click="updateMsg">updateMsg</button>  
+            <button @click="destroy">destroy</button>  
+        </div>  
+    </body>  
+  
+    <script>  
+        var app = new Vue({  
+            el: '#app',  
+            data: {  
+                message: "hello world",  
+                },  
+            methods: {  
+                updateMsg: function() {  
+                    this.message = "clicked";  
+                },  
+                destroy: function() {  
+                    app.$destroy();  
+                }  
+            },  
+            beforeCreate: function() { 
+            	console.log("组件实例刚被创建，属性被创建之前，如data属性")
+                console.log("el     : " + this.$el); //undefined  
+                console.log("data   : " + this.$data); //undefined   
+                console.log("message: " + this.message); //undefined   
+            },  
+            created: function() {  
+                console.log("组件实例创建完成，属性已绑定，但DOM还未生成，$el属性不存在")
+                console.log("el     : " + this.$el); //undefined  
+                console.log("data   : " + this.$data); //已被初始化   
+                console.log("message: " + this.message); //已被初始化  
+            },  
+            beforeMount: function() {  
+                console.log("实例被挂载之前（虚拟Dom技术，先把坑占住了。到后面mounted挂载的时候再把值渲染进去)");
+                console.log("el     : " + (this.$el)); //已被初始化,但实际上还没有渲染data中的数值到元素  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data); //已被初始化    
+                console.log("message: " + this.message); //已被初始化    
+            },  
+            mounted: function() {  
+                console.log("实例被挂载")
+                console.log("el     : " + this.$el); //已被初始化  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data); //已被初始化  
+                console.log("message: " + this.message); //已被初始化   
+            },  
+            beforeUpdate: function() {  
+                console.log("组件更新前状态")
+                console.log("el     : " + this.$el);  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data);  
+                console.log("message: " + this.message);  
+            },  
+            updated: function() {  
+                console.log('组件updated 更新完成状态');  
+                console.log("el     : " + this.$el);  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data);  
+                console.log("message: " + this.message);  
+            },  
+            activated: function() {  
+                console.log('activated <keep-alive>组件被激活时状态');
+                /*把切换出去的组件保留在内存中，可以保留他的状态或避免重新渲染*/
+                console.log("el     : " + this.$el);  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data);  
+                console.log("message: " + this.message);  
+            },  
+            deactivated: function() {  
+                console.log('deactivated <keep-alive>组件被移除时状态');  
+                console.log("el     : " + this.$el);  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data);  
+                console.log("message: " + this.message);  
+            },  
+            beforeDestroy: function() {  
+                console.log('组件beforeDestroy 销毁前状态');  
+                console.log("el     : " + this.$el);  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data);  
+                console.log("message: " + this.message);  
+            },  
+            destroyed: function() {  
+                console.log('组件destroyed 销毁完成状态（销毁后vue失效，但元素还在）');  
+                console.log("el     : " + this.$el);  
+                console.log(this.$el);  
+                console.log("data   : " + this.$data);  
+                console.log("message: " + this.message)  
+            }  
+        })  
+    </script>  
+  
+</html>  
