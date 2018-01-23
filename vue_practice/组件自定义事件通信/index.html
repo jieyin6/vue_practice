@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<p>{{total}}</p>
+			<button-router v-on:increment="incrementTotal"></button-router>
+			<button-router v-on:increment="incrementTotal"></button-router>
+			
+		</div>
+	</body>
+	<script type="text/javascript" src="js/vue.js" ></script>
+	<script>
+		Vue.component('button-router',{
+			template:'<button v-on:click="increment">{{counter}}</button>',
+			data:function(){
+				return{
+					counter:0
+				}
+			},
+			methods:{
+				increment:function(){
+					this.counter += 1;
+					this.$emit('increment')
+				}
+			}
+		})
+		var app = new Vue({
+			el:'#app',
+			data:{
+				total:0
+			},
+			methods:{
+				incrementTotal:function(){
+					this.total += 1
+				}
+			}
+		})
+		
+		
+	</script>
+</html>
